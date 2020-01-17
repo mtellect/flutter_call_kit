@@ -35,8 +35,13 @@ typedef Future<dynamic> OnDeactivateAudioSession();
 ///
 /// you might want to do following things when receiving this event:
 /// Start playing ringback if it is an outgoing call
-typedef Future<dynamic> OnIncomingCall(String error, String uuid, String handle,
-    String localizedCallerName, bool fromPushKit);
+typedef Future<dynamic> OnIncomingCall(
+  String error,
+  String uuid,
+  String handle,
+  String localizedCallerName,
+  bool fromPushKit,
+);
 
 /// A call was muted by the system or the user:
 ///
@@ -58,9 +63,17 @@ typedef Future<dynamic> OnDTMF(String digits, String uuid);
 
 typedef Future<dynamic> OnStartCall(String handle, bool video);
 
-enum HandleType { phoneNumber, generic, email }
+enum HandleType {
+  phoneNumber,
+  generic,
+  email,
+}
 
-enum EndReason { failed, remoteEnded, unanswered,  }
+enum EndReason {
+  failed,
+  remoteEnded,
+  unanswered,
+}
 
 class IOSOptions {
   ///  It will be displayed on system UI when incoming calls received
@@ -81,13 +94,14 @@ class IOSOptions {
   /// If provided, whether or not the application supports video calling (Default: true)
   final bool supportsVideo;
 
-  IOSOptions(this.appName,
-      {this.imageName = "",
-      this.ringtoneSound = "",
-      this.maximumCallGroups = 3,
-      this.maximumCallsPerCallGroup = 1,
-      this.supportsVideo = true})
-      : assert(appName != null),
+  IOSOptions(
+    this.appName, {
+    this.imageName = "",
+    this.ringtoneSound = "",
+    this.maximumCallGroups = 3,
+    this.maximumCallsPerCallGroup = 1,
+    this.supportsVideo = true,
+  })  : assert(appName != null),
         assert(imageName != null),
         assert(ringtoneSound != null),
         assert(maximumCallGroups != null),
@@ -251,9 +265,12 @@ class FlutterCallKit {
   /// A [handleType] which describes this [handle] see [HandleType]
   /// tell the system whether this is a [video] call
   Future<void> displayIncomingCall(
-      String uuid, String handle, String localizedCallerName,
-      {HandleType handleType = HandleType.phoneNumber,
-      bool video = false}) async {
+    String uuid,
+    String handle,
+    String localizedCallerName, {
+    HandleType handleType = HandleType.phoneNumber,
+    bool video = false,
+  }) async {
     if (!Platform.isIOS) {
       return;
     }
@@ -274,9 +291,13 @@ class FlutterCallKit {
   /// A [handleType] which describes this [handle] see [HandleType]
   /// tell the system whether this is a [video] call
   ///
-  Future<void> startCall(String uuid, String handle, String contactIdentifier,
-      {HandleType handleType = HandleType.phoneNumber,
-      bool video = false}) async {
+  Future<void> startCall(
+    String uuid,
+    String handle,
+    String contactIdentifier, {
+    HandleType handleType = HandleType.phoneNumber,
+    bool video = false,
+  }) async {
     if (!Platform.isIOS) {
       return;
     }
@@ -386,8 +407,12 @@ class FlutterCallKit {
   /// The [displayName] is the name of the caller to be displayed on the native UI
   /// A [handleType] which describes this [handle] see [HandleType]
   ///
-  Future<void> updateDisplay(String uuid, String handle, String displayName,
-      {HandleType handleType = HandleType.phoneNumber}) async {
+  Future<void> updateDisplay(
+    String uuid,
+    String handle,
+    String displayName, {
+    HandleType handleType = HandleType.phoneNumber,
+  }) async {
     if (!Platform.isIOS) {
       return;
     }

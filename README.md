@@ -5,7 +5,7 @@ Flutter Call Kit Plugin - Currently iOS >= 10.0 only
 
 ## Motivation
 
-**Flutter Call Kit** utilises a brand new iOS 10 framework **CallKit**  to make the life easier for VoIP developers using Flutter.
+**Flutter Call Kit** utilises a brand new iOS 10 framework **CallKit** to make the life easier for VoIP developers using Flutter.
 
 **Note 1**: This plugin works for only iOS. No android support yet
 
@@ -13,13 +13,13 @@ Flutter Call Kit Plugin - Currently iOS >= 10.0 only
 
 For more information about **CallKit** on iOS, please see [Official CallKit Framework Document](https://developer.apple.com/reference/callkit?language=objc) or [Introduction to CallKit by Xamarin](https://developer.xamarin.com/guides/ios/platform_features/introduction-to-ios10/callkit/)
 
-
 ## iOS
+
 ![Connection Service](https://github.com/react-native-webrtc/react-native-callkeep/blob/master/docs/pictures/call-kit.png)
 
 ## Usage
-Add `flutter_call_kit` as a [dependency in your pubspec.yaml file](https://flutter.io/using-packages/).
 
+Add `flutter_call_kit` as a [dependency in your pubspec.yaml file](https://flutter.io/using-packages/).
 
 ## Example
 
@@ -146,6 +146,7 @@ class _MyAppState extends State<MyApp> {
 ## Receiving a call when the application is not reachable.
 
 In some case your application can be unreachable :
+
 - when the user kill the application
 - when it's in background since a long time (eg: after ~5mn the os will kill all connections).
 
@@ -171,6 +172,34 @@ Since iOS 13, you'll have to report the incoming calls that wakes up your applic
 
   completion();
 }
+```
+
+```swift
+    func pushRegistry(_ registry: PKPushRegistry, didReceiveIncomingPushWith payload: PKPushPayload, for type: PKPushType, completion: @escaping () -> Void) {
+        // Register VoIP push token (a property of PKPushCredentials) with server
+        FlutterVoipPushNotificationPlugin.didReceiveIncomingPush(with: payload, forType: type.rawValue)
+
+        /*
+        // Extract values from payload
+        let uuid = payload.dictionaryPayload["uuid"] as? String
+        let caller = payload.dictionaryPayload["caller"] as? String
+        let handle = payload.dictionaryPayload["handle"] as? String
+        let handleType = payload.dictionaryPayload["handle_type"] as? String
+
+        if uuid != nil && caller != nil && handle != nil && handleType != nil {
+            FlutterCallKitPlugin.reportNewIncomingCall(uuid, handle: handle, handleType: handleType, hasVideo: true, localizedCallerName: caller, fromPushKit: true)
+        }
+        */
+
+        // Hard coded values
+        let uuid: String = "110ec58a-a0f2-4ac4-8393-c866d813b8d1"
+        let handle: String = "handle"
+        let handleType: String = "generic"
+        let caller: String = "caller"
+        FlutterCallKitPlugin.reportNewIncomingCall(uuid, handle: handle, handleType: handleType, hasVideo: true, localizedCallerName: caller, fromPushKit: true)
+
+        completion()
+  }
 ```
 
 ## Contributing
