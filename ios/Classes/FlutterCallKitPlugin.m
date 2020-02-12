@@ -182,7 +182,7 @@ static CXProvider* sharedProvider;
     [self requestTransaction:transaction result:result];
 }
 
-- (void)endCall:(NSString *)uuidString result:(FlutterResult)result
++ (void)endCall:(NSString *)uuidString result:(FlutterResult)result
 {
 #ifdef DEBUG
     NSLog(@"[FlutterCallKitPlugin][endCall] uuid = %@", uuidString);
